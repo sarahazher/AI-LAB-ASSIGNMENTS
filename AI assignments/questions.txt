@@ -1,0 +1,11 @@
+1]Implement depth first search algorithm and Breadth First Search algorithm, Use an undirected
+graph and develop a recursive algorithm for searching all the vertices of a graph or tree data
+structure.
+2]Implement A star Algorithm for 8 puzzle game search problems.
+3]Implement Alpha-beta Tree search for any game search problem[TIC TAC TOE
+Game]
+4]Implement a solution for a Constraint Satisfaction Problem using Branch and Bound /Backtracking for n-queens problem
+5]Develop an elementary chatbot for any suitable customer
+interaction application.
+6]Implement Greedy search algorithm for any of the following application:
+Prims Algorithm | Minimum Spanning Tree (Python Code)

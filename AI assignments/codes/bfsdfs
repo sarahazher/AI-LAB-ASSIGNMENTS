@@ -1,0 +1,91 @@
+from collections import deque
+This line imports the deque data structure from the collections module. 
+deque will be used to implement the queue for BFS.
+
+
+def addnode(v, g):
+    if v in g:
+        print(v, "is present already")
+    else:
+        g[v] = []
+This function, addnode, is used to add a node to the graph g. If the node already exists in the graph,
+it prints a message saying the node is already present. Otherwise, it adds the node as a key in the g dictionary 
+with an empty list as its associated value. This list will store the neighbors of the node.
+
+python
+Copy code
+def addedge(v1, v2, g):
+    if v1 not in g:
+        print(v1, "not present in graph")
+    elif v2 not in g:
+        print(v2, "not present in graph")
+    else:
+        g[v1].append(v2)
+        g[v2].append(v1)
+
+The addedge function adds an edge between two nodes, v1 and v2, in the graph g. If either of these nodes doesn't exist
+in the graph, it prints a message indicating that the node is not present. Otherwise, it adds v1 to the list of neighbors 
+of v2 and vice versa because the graph is undirected.
+
+python
+Copy code
+def dfs(n, vis, g):
+    if n not in vis:
+        print(n)
+        vis.add(n)
+        for i in g[n]:
+            dfs(i, vis, g)
+This is the Depth-First Search (DFS) function. It takes a node n, a set of visited nodes vis, and the graph g as 
+arguments. It recursively explores the graph starting from node n. If the node is not in the set of visited nodes,
+it prints the node and marks it as visited. Then, it recursively explores its neighbors using a loop, calling the dfs function for each unvisited neighbor.
+
+def bfs(queue, vis, g):
+    if not queue:
+        return
+    n = queue.popleft()
+    if n not in vis:
+        print(n)
+        vis.add(n)
+
+    for i in g[n]:
+        if i not in vis and i not in queue:
+            queue.append(i)
+
+    bfs(queue, vis, g)
+This is the Breadth-First Search (BFS) function. It takes a queue, a set of visited nodes, and the graph as arguments. 
+The queue is used to maintain the order of nodes to be explored in BFS. It dequeues a node n from the queue, prints it, 
+and marks it as visited if it hasn't been visited. Then, it enqueues its unvisited neighbors and calls itself recursively
+to continue the BFS process.
+
+vis = set()
+g = {}
+Here, you initialize an empty set vis to keep track of visited nodes and an empty dictionary g to represent the graph.
+
+addnode("a", g)
+addnode("b", g)
+addnode("c", g)
+addnode("d", g)
+addnode("e", g)
+You add nodes 'a', 'b', 'c', 'd', and 'e' to the graph using the addnode function.
+
+addedge("a", "b", g)
+addedge("b", "e", g)
+addedge("a", "c", g)
+addedge("a", "d", g)
+addedge("b", "d", g)
+addedge("c", "d", g)
+addedge("e", "d", g)
+You add edges between the nodes to create the connections in the graph using the addedge function.
+
+python
+Copy code
+print("DFS (Starting from vertex 'a'):")
+dfs("a", vis, g)
+You initiate the DFS traversal starting from node 'a' and print the result.
+
+python
+Copy code
+print("\nBFS (Starting from vertex 'a'):")
+bfs(deque(["a"]), set(), g)
+You initiate the BFS traversal starting from node 'a' and print the result. This uses deque to initialize the queue
+and an empty set for visited nodes.

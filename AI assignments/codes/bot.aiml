@@ -1,0 +1,44 @@
+<aiml>
+<category>
+<pattern>HI</pattern>
+<template>Hello there!</template>
+</category>
+<category>
+<pattern>HELLO</pattern>
+<template>Hi! How can I assist you today?</template>
+</category>
+<category>
+<pattern>WHAT IS THE WEATHER LIKE TODAY</pattern>
+<template>Sorry, I don't have access to real-time weather information.</template>
+</category>
+<category>
+<pattern>WHAT IS YOUR NAME</pattern>
+<template>My name is SmileBOT.</template>
+</category>
+<category>
+<pattern>TELL ME A JOKE</pattern>
+<template>I failed math so many times at school, I can’t even count.</template>
+</category>
+<category>
+<pattern>WHAT IS THE MEANING OF LIFE</pattern>
+<template>The meaning of life is a profound philosophical question, and the answer may vary from
+person to person.</template>
+</category>
+<category>
+<pattern>WHO WON THE FOOTBALL WORLD CUP IN 2023</pattern>
+<template>ARGENTINA WON THE WORLD CUP.</template>
+</category>
+<category>
+<pattern>TELL ME ABOUT YOURSELF</pattern>
+<template>I am a friendly chatbot created to assist and provide information to users.</template>
+</category>
+<category>
+<pattern>WHAT IS THE CAPITAL OF TURKEY</pattern>
+<template>The capital of Turkey is Ankara.</template>
+</category>
+<category>
+<pattern>DO YOU LIKE ICE CREAM</pattern>
+<template>Unfortunately, I am just a computer program and do not have the ability to taste or enjoy
+food.</template>
+</category>
+</aiml>
