@@ -1,0 +1,138 @@
+
+C:\Users\Admin>mysql -u root -p
+Enter password: *****
+
+
+mysql> create database ass2;
+Query OK, 1 row affected (0.15 sec)
+
+mysql> use ass2;
+Database changed
+mysql> create table employee( id int, name char(20), j_date date, primary key(id));
+Query OK, 0 rows affected (0.31 sec)
+
+mysql> select *from employee
+    -> ;
+Empty set (0.07 sec)
+
+mysql> desc employee;
++--------+----------+------+-----+---------+-------+
+| Field  | Type     | Null | Key | Default | Extra |
++--------+----------+------+-----+---------+-------+
+| id     | int      | NO   | PRI | NULL    |       |
+| name   | char(20) | YES  |     | NULL    |       |
+| j_date | date     | YES  |     | NULL    |       |
++--------+----------+------+-----+---------+-------+
+3 rows in set (0.24 sec)
+
+
+mysql> create table emp_finance(payid int auto_increment, id int, sal int, emcontract date, foreign key(id) references employee(id), primary key(payid));
+Query OK, 0 rows affected (0.17 sec)
+
+mysql> desc emp_finance;
++------------+------+------+-----+---------+----------------+
+| Field      | Type | Null | Key | Default | Extra          |
++------------+------+------+-----+---------+----------------+
+| payid      | int  | NO   | PRI | NULL    | auto_increment |
+| id         | int  | YES  | MUL | NULL    |                |
+| sal        | int  | YES  |     | NULL    |                |
+| emcontract | date | YES  |     | NULL    |                |
++------------+------+------+-----+---------+----------------+
+4 rows in set (0.01 sec)
+
+
+mysql> insert into employee values(1,'ram','2020/09/08');
+Query OK, 1 row affected, 1 warning (0.01 sec)
+
+
+mysql>  insert into employee( id , name, j_date ) values (2,'sham','2021/04/06'),(3,'alice','2024/04/16'),(4,'jhon','2024/3/26');
+Query OK, 3 rows affected, 3 warnings (0.01 sec)
+Records: 3  Duplicates: 0  Warnings: 3
+
+
+mysql> select *from employee;
++----+-------+------------+
+| id | name  | j_date     |
++----+-------+------------+
+|  1 | ram   | 2020-09-08 |
+|  2 | sham  | 2021-04-06 |
+|  3 | alice | 2024-04-16 |
+|  4 | jhon  | 2024-03-26 |
++----+-------+------------+
+4 rows in set (0.00 sec)
+
+mysql> insert into  emp_finance (payid , id , sal, emcontract) values (1,1,2000,'25/09/07'),(null,3,4000,'25/08/07');
+Query OK, 2 rows affected, 2 warnings (0.02 sec)
+Records: 2  Duplicates: 0  Warnings: 2
+
+mysql> select *from emp_finance;
++-------+------+------+------------+
+| payid | id   | sal  | emcontract |
++-------+------+------+------------+
+|     1 |    1 | 2000 | 2025-09-07 |
+|     2 |    3 | 4000 | 2025-08-07 |
++-------+------+------+------------+
+2 rows in set (0.00 sec)
+
+mysql> create view empdetails
+    -> as
+    -> select e.id , e.name, f.sal
+    -> from employee as e inner join emp_finance as f
+    -> where e.id= f.id;
+Query OK, 0 rows affected (0.05 sec)
+
+mysql> select * from empdetails;
++----+-------+------+
+| id | name  | sal  |
++----+-------+------+
+|  1 | ram   | 2000 |
+|  3 | alice | 4000 |
++----+-------+------+
+2 rows in set (0.01 sec)
+
+mysql> alter table emp_finance add index salary (sal);
+Query OK, 0 rows affected (0.19 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> select *from emp_finance;
++-------+------+------+------------+
+| payid | id   | sal  | emcontract |
++-------+------+------+------------+
+|     1 |    1 | 2000 | 2025-09-07 |
+|     2 |    3 | 4000 | 2025-08-07 |
++-------+------+------+------------+
+2 rows in set (0.00 sec)
+
+mysql> call sys.create_synonym_db('ass2','assignment2');
++-----------------------------------------------+
+| summary                                       |
++-----------------------------------------------+
+| Created 3 views in the `assignment2` database |
++-----------------------------------------------+
+1 row in set (0.29 sec)
+
+Query OK, 0 rows affected (0.32 sec)
+
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| ass2               |
+| assignment2        |
+| emp                |
+| hms                |
+| information_schema |
+| mysql              |
+| performance_schema |
+| sppu               |
+| sys                |
+| university         |
++--------------------+
+10 rows in set (0.05 sec)
+
+create sequence emp_seq
+    -> start with 5
+    -> increment by 1
+    -> maxvalue 20
+    -> minvalue 1
+    -> nocycle;

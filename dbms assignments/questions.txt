@@ -1,0 +1,9 @@
+1] SQL queries using Insert, Select, Update, delete with operators, functions, and set operator etc.
+2] SQL Queries - all types of Join, Sub-Query and View
+3]Write the MongoDB Queries using CRUD operations. (Use CRUDoperations,
+SAVE method, logical operators etc)
+4]To write a PL/SQL block of code using Control structure and Exception handling.
+5]PL/SQL code block using Cursors (All types: Implicit, Explicit, Cursor FOR Loop, Parameterized Cursor)
+Problem
+6]Write a program to implement MySQL/Oracle database connectivity with any front-end language to
+implement Database navigation operations (add, delete, edit etc.)

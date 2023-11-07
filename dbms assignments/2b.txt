@@ -1,0 +1,34 @@
++-------+----------+----------+------+
+| empid | lastname | jobid    | sal  |
++-------+----------+----------+------+
+|     1 | alice    | employee | 1000 |
+|     2 | ben      | employee | 1200 |
+|     3 | joy      | manager  | 1500 |
+|     4 | jack     | manager  | 2000 |
+|     5 | rose     | employee | 2500 |
++-------+----------+----------+------+
+
+mysql> select* from emp
+    -> where jobid= 'employee'
+    -> and sal< ALL (select sal from emp where jobid ='manager');
++-------+----------+----------+------+
+| empid | lastname | jobid    | sal  |
++-------+----------+----------+------+
+|     1 | alice    | employee | 1000 |
+|     2 | ben      | employee | 1200 |
++-------+----------+----------+------+
+2 rows in set (0.00 sec)
+
+mysql> select * from emp
+    -> where jobid= 'employee'
+    -> and sal<> ALL (select sal from emp where jobid = 'manager');
++-------+----------+----------+------+
+| empid | lastname | jobid    | sal  |
++-------+----------+----------+------+
+|     1 | alice    | employee | 1000 |
+|     2 | ben      | employee | 1200 |
+|     5 | rose     | employee | 2500 |
++-------+----------+----------+------+
+3 rows in set (0.02 sec)
+
+mysql>

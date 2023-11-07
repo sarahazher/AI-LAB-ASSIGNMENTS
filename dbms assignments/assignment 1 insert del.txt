@@ -1,0 +1,203 @@
+insert select update delete 
+operators: in not in like set between
+aggregate : avg sum min max count 
+date: year month day currdate currtime
+numeric: abs mod sqrt power
+string: upper , lower length, concat
+
+C:\Users\Admin>mysql -u root -p
+Enter password: *****
+
+mysql> create database ass3;
+Query OK, 1 row affected (0.02 sec)
+
+mysql> use ass3;
+Database changed
+
+mysql>  create table emp(id int primary key auto_increment, fname char(20) not null ,lname char(20)not null,
+    ->  sal int , jdate date );
+Query OK, 0 rows affected (0.15 sec)
+
+mysql> desc emp;
++-------+----------+------+-----+---------+----------------+
+| Field | Type     | Null | Key | Default | Extra          |
++-------+----------+------+-----+---------+----------------+
+| id    | int      | NO   | PRI | NULL    | auto_increment |
+| fname | char(20) | NO   |     | NULL    |                |
+| lname | char(20) | NO   |     | NULL    |                |
+| sal   | int      | YES  |     | NULL    |                |
+| jdate | date     | YES  |     | NULL    |                |
++-------+----------+------+-----+---------+----------------+
+5 rows in set (0.02 sec)
+
+
+mysql>  insert into emp (id, fname ,lname, sal , jdate) values (null,' harvey', 'specter', 10000,'2002/2/7'),(null, 'mike', 'ross', 1000,'2006/12/5'),(null, 'jesica', 'pearson', 20000,'2001/3/8');
+Query OK, 3 rows affected, 3 warnings (0.01 sec)
+Records: 3  Duplicates: 0  Warnings: 3
+
+mysql> select * from emp;
++----+---------+---------+-------+------------+
+| id | fname   | lname   | sal   | jdate      |
++----+---------+---------+-------+------------+
+|  1 |  harvey | specter | 10000 | 2002-02-07 |
+|  2 | mike    | ross    |  1000 | 2006-12-05 |
+|  3 | jesica  | pearson | 20000 | 2001-03-08 |
++----+---------+---------+-------+------------+
+3 rows in set (0.00 sec)
+
+mysql> update emp set sal=15000
+    -> where id=2;
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from emp;
++----+---------+---------+-------+------------+
+| id | fname   | lname   | sal   | jdate      |
++----+---------+---------+-------+------------+
+|  1 |  harvey | specter | 10000 | 2002-02-07 |
+|  2 | mike    | ross    | 15000 | 2006-12-05 |
+|  3 | jesica  | pearson | 20000 | 2001-03-08 |
++----+---------+---------+-------+------------+
+3 rows in set (0.00 sec)
+
+mysql> delete from emp
+    -> where id= 3;
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select * from emp;
++----+---------+---------+-------+------------+
+| id | fname   | lname   | sal   | jdate      |
++----+---------+---------+-------+------------+
+|  1 |  harvey | specter | 10000 | 2002-02-07 |
+|  2 | mike    | ross    | 15000 | 2006-12-05 |
++----+---------+---------+-------+------------+
+2 rows in set (0.00 sec)
+
+mysql> select avg(sal)
+    -> from emp;
++------------+
+| avg(sal)   |
++------------+
+| 12500.0000 |
++------------+
+1 row in set (0.01 sec)
+
+mysql> insert into emp (id, fname ,lname, sal , jdate) values (null,' donna', 'paulsen', 1000,'2007/8/7'),(null, 'rachel', 'zane', 1000,'2005/12/5'),(null, 'jesica', 'pearson', 20000,'2001/3/8');
+Query OK, 3 rows affected, 3 warnings (0.01 sec)
+Records: 3  Duplicates: 0  Warnings: 3
+
+mysql> select * from emp;
++----+---------+---------+-------+------------+
+| id | fname   | lname   | sal   | jdate      |
++----+---------+---------+-------+------------+
+|  1 |  harvey | specter | 10000 | 2002-02-07 |
+|  2 | mike    | ross    | 15000 | 2006-12-05 |
+|  4 |  donna  | paulsen |  1000 | 2007-08-07 |
+|  5 | rachel  | zane    |  1000 | 2005-12-05 |
+|  6 | jesica  | pearson | 20000 | 2001-03-08 |
++----+---------+---------+-------+------------+
+5 rows in set (0.00 sec)
+
+
+mysql> select concat(fname,lname) from emp
+    ->  where sal in(select max(sal) from emp);
++---------------------+
+| concat(fname,lname) |
++---------------------+
+| jesicapearson       |
++---------------------+
+1 row in set (0.01 sec)
+
+mysql> select upper(concat(fname,lname)) from emp
+    ->  where sal in(select min(sal) from emp);
++----------------------------+
+| upper(concat(fname,lname)) |
++----------------------------+
+|  DONNAPAULSEN              |
+| RACHELZANE                 |
++----------------------------+
+2 rows in set (0.01 sec)
+
+mysql> select * from emp where year(jdate) ='2006';
++----+-------+-------+-------+------------+
+| id | fname | lname | sal   | jdate      |
++----+-------+-------+-------+------------+
+|  2 | mike  | ross  | 15000 | 2006-12-05 |
++----+-------+-------+-------+------------+
+1 row in set (0.00 sec)
+
+
+mysql> insert into emp values (null, 'robert', 'zane',2000,'2001/3/6');
+Query OK, 1 row affected, 1 warning (0.01 sec)
+
+mysql> select
+    ->
+    -> \c
+mysql> select *from emp;
++----+---------+---------+-------+------------+
+| id | fname   | lname   | sal   | jdate      |
++----+---------+---------+-------+------------+
+|  1 |  harvey | specter | 10000 | 2002-02-07 |
+|  2 | mike    | ross    | 15000 | 2006-12-05 |
+|  4 |  donna  | paulsen |  1000 | 2007-08-07 |
+|  5 | rachel  | zane    |  1000 | 2005-12-05 |
+|  6 | jesica  | pearson | 20000 | 2001-03-08 |
+|  7 | robert  | zane    |  2000 | 2001-03-06 |
++----+---------+---------+-------+------------+
+6 rows in set (0.00 sec)
+
+
+mysql> select *from emp where lname like 'zane%';
++----+--------+-------+------+------------+
+| id | fname  | lname | sal  | jdate      |
++----+--------+-------+------+------------+
+|  5 | rachel | zane  | 1000 | 2005-12-05 |
+|  7 | robert | zane  | 2000 | 2001-03-06 |
++----+--------+-------+------+------------+
+2 rows in set (0.00 sec)
+
+mysql> select *from emp where id in (1,2,3);
++----+---------+---------+-------+------------+
+| id | fname   | lname   | sal   | jdate      |
++----+---------+---------+-------+------------+
+|  1 |  harvey | specter | 10000 | 2002-02-07 |
+|  2 | mike    | ross    | 15000 | 2006-12-05 |
++----+---------+---------+-------+------------+
+2 rows in set (0.01 sec)
+
+mysql> select *from emp where id not in (1,2,3);
++----+--------+---------+-------+------------+
+| id | fname  | lname   | sal   | jdate      |
++----+--------+---------+-------+------------+
+|  4 |  donna | paulsen |  1000 | 2007-08-07 |
+|  5 | rachel | zane    |  1000 | 2005-12-05 |
+|  6 | jesica | pearson | 20000 | 2001-03-08 |
+|  7 | robert | zane    |  2000 | 2001-03-06 |
++----+--------+---------+-------+------------+
+4 rows in set (0.00 sec)
+
+mysql> select *from emp where year(jdate) between '2005' and '2007';
++----+--------+---------+-------+------------+
+| id | fname  | lname   | sal   | jdate      |
++----+--------+---------+-------+------------+
+|  2 | mike   | ross    | 15000 | 2006-12-05 |
+|  4 |  donna | paulsen |  1000 | 2007-08-07 |
+|  5 | rachel | zane    |  1000 | 2005-12-05 |
++----+--------+---------+-------+------------+
+3 rows in set (0.00 sec)
+
+mysql> select count(id) from emp;
++-----------+
+| count(id) |
++-----------+
+|         6 |
++-----------+
+1 row in set (0.02 sec)
+
+mysql> select sum(sal) from emp;
++----------+
+| sum(sal) |
++----------+
+|    49000 |
++----------+
+1 row in set (0.00 sec)

@@ -1,0 +1,111 @@
+
+
+mysql> create database employee;
+Query OK, 1 row affected (0.18 sec)
+
+mysql> use employee;
+Database changed
+
+mysql> create table dept (deptno int primary key , deptname char (20));
+Query OK, 0 rows affected (0.04 sec)
+
+mysql> drop table emp;
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> create table emp(empno int primary key, empname char (20), deptno char(20));
+Query OK, 0 rows affected (0.02 sec)
+
+mysql>  insert into emp (empno, empname, deptno) values (1,'sarah',11),(2,'iman',12),(3,'manal',13);
+Query OK, 3 rows affected (0.01 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+
+mysql> insert into dept (deptno , deptname) values (11,'aids'),(12,'cs'),(13,'aiml'),(14,'entc');
+Query OK, 4 rows affected (0.01 sec)
+Records: 4  Duplicates: 0  Warnings: 0
+
+mysql> select *from dept;
++--------+----------+
+| deptno | deptname |
++--------+----------+
+|     11 | aids     |
+|     12 | cs       |
+|     13 | aiml     |
+|     14 | entc     |
++--------+----------+
+4 rows in set (0.01 sec)
+
+mysql> select *from emp;
++-------+---------+--------+
+| empno | empname | deptno |
++-------+---------+--------+
+|     1 | sarah   | 11     |
+|     2 | iman    | 12     |
+|     3 | manal   | 13     |
++-------+---------+--------+
+3 rows in set (0.00 sec)
+
+mysql> INSERT INTO address (deptname, deptloc) VALUES ('aids', 'pune');
+Query OK, 1 row affected (0.05 sec)
+
+mysql> INSERT INTO address (deptname, deptloc) VALUES ('cs', 'delhi');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> INSERT INTO address (deptname, deptloc) VALUES ('aiml', 'mumbai');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> INSERT INTO address (deptname, deptloc) VALUES ('entc', 'goa');
+Query OK, 1 row affected (0.02 sec)
+
+mysql> select *from address;
++----------+---------+
+| deptname | deptloc |
++----------+---------+
+| aids     | pune    |
+| cs       | delhi   |
+| aiml     | mumbai  |
+| entc     | goa     |
++----------+---------+
+4 rows in set (0.00 sec)
+
+mysql> SELECT a.deptloc
+    -> FROM emp e
+    -> JOIN dept d ON e.deptno = d.deptno
+    -> JOIN address a ON d.deptname = a.deptname
+    -> WHERE e.empname = 'sarah';
++---------+
+| deptloc |
++---------+
+| pune    |
++---------+
+1 row in set (0.01 sec)
+
+mysql> CREATE VIEW TotalEmployeesInDepartment AS
+    -> SELECT d.deptname, COUNT(e.empno) AS TotalEmployees
+    -> FROM dept d
+    -> LEFT JOIN emp e ON d.deptno = e.deptno
+    -> GROUP BY d.deptname;
+Query OK, 0 rows affected (0.08 sec)
+
+mysql> select *from TotalEmployeesInDepartment;
++----------+----------------+
+| deptname | TotalEmployees |
++----------+----------------+
+| aids     |              1 |
+| cs       |              1 |
+| aiml     |              1 |
+| entc     |              0 |
++----------+----------------+
+4 rows in set (0.02 sec)
+
+mysql> SELECT d.deptname
+    -> FROM dept d
+    -> LEFT JOIN emp e ON d.deptno = e.deptno
+    -> WHERE e.empno IS NULL;
++----------+
+| deptname |
++----------+
+| entc     |
++----------+
+1 row in set (0.00 sec)
+
+mysql>

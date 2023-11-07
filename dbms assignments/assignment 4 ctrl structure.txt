@@ -1,0 +1,95 @@
+4. Unnamed PL/SQLcode block: Use of Control structure and Exception handling is mandatory.
+Suggested Problem statement:
+Consider Tables:
+1. Borrower (Roll_no, Name, Date_of_Issue, Name_of_Book, Status)
+2. Fine (Roll_no, Date, Amt)
+ Accept Roll_no and Name_of_Book from user.
+ Check the number of days (from Date_of_Issue).
+ If days are between 15 to 30 then fine amount will be Rs 5per day.
+ If no. of days>30, per day fine will be Rs 50 per day and for days less than 30, Rs. 5 per day.
+ After submitting the book, status will change from I to R.
+ If condition of fine is true, then details will be stored into fine table.
+ Also handles the exception by named exception handler or user define exception handler.
+
+
+
+mysql> create database ass5;
+Query OK, 1 row affected (0.01 sec)
+
+mysql> use ass5;
+Database changed
+
+mysql> create table borrower(roll int primary key, name char(20), doissue date, bname char (20), status char(1));
+Query OK, 0 rows affected (0.10 sec)
+
+mysql> desc borrower;
++---------+----------+------+-----+---------+-------+
+| Field   | Type     | Null | Key | Default | Extra |
++---------+----------+------+-----+---------+-------+
+| roll    | int      | NO   | PRI | NULL    |       |
+| name    | char(20) | YES  |     | NULL    |       |
+| doissue | date     | YES  |     | NULL    |       |
+| bname   | char(20) | YES  |     | NULL    |       |
+| status  | char(1)  | YES  |     | NULL    |       |
++---------+----------+------+-----+---------+-------+
+5 rows in set (0.02 sec)
+
+
+mysql> create table fine(roll int , fdate date, amt int ,foreign key (roll) references borrower(roll));
+Query OK, 0 rows affected (0.09 sec)
+
+mysql> desc fine;
++-------+------+------+-----+---------+-------+
+| Field | Type | Null | Key | Default | Extra |
++-------+------+------+-----+---------+-------+
+| roll  | int  | YES  | MUL | NULL    |       |
+| fdate | date | YES  |     | NULL    |       |
+| amt   | int  | YES  |     | NULL    |       |
++-------+------+------+-----+---------+-------+
+3 rows in set (0.01 sec)
+
+mysql> insert into borrower(roll,name,doissue, bname, status ) values (1 ,'a','2020-2-12','java','I'),(2 ,'B','2020-12-1','DBMS','I'),(3 ,'C','2020-7-17','CN','I'),(4 ,'D','2020-7-5','AI','I');
+
+mysql> select *from borrower;
++------+------+------------+-------+--------+
+| roll | name | doissue    | bname | status |
++------+------+------------+-------+--------+
+|    1 | a    | 2020-02-12 | java  | I      |
+|    2 | B    | 2020-12-01 | DBMS  | I      |
+|    3 | C    | 2020-07-17 | CN    | I      |
+|    4 | D    | 2020-07-05 | AI    | I      |
++------+------+------------+-------+--------+
+4 rows in set (0.00 sec)
+
+ mysql>  delimiter $
+mysql>  create procedure calculation(IN rno int(3), bname char(20))
+    ->      begin
+    ->      declare idate date;
+    ->     declare diff int;
+    ->     declare fineamt int;
+    ->    declare exit handler for sqlexception select 'Table not Nound';
+    ->     select doissue into idate from borrower where roll = rno and bname= bname;
+    ->      select datediff (curdate(), idate) into diff;
+    ->     if (diff > 15 and diff <=30) then
+    ->     set fineamt = diff*5;
+    ->      insert into fine values(rno,curdate(),fineamt);
+    ->     elseif (diff>30) then
+    ->     set fineamt = 15*5 +(diff-30)*50;
+    ->      insert into fine values (rno,curdate(), fineamt);
+    ->     end if;
+    ->      update borrower set status ='R' where roll = rno and bname=bname;
+    ->      end;
+    ->      $
+Query OK, 0 rows affected, 1 warning (0.01 sec)
+
+mysql> delimiter ;
+mysql> call calculation(3,'CN');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> SELECT *FROM FINE;
++------+------------+-------+
+| roll | fdate      | amt   |
++------+------------+-------+
+|    3 | 2023-09-22 | 56675 |
++------+------------+-------+
+1 row in set (0.00 sec)

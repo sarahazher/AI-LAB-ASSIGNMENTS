@@ -1,0 +1,229 @@
+Microsoft Windows [Version 10.0.19045.3570]
+(c) Microsoft Corporation. All rights reserved.
+
+C:\Users\Admin>mongod --version
+db version v7.0.2
+Build Info: {
+    "version": "7.0.2",
+    "gitVersion": "02b3c655e1302209ef046da6ba3ef6749dd0b62a",
+    "modules": [],
+    "allocator": "tcmalloc",
+    "environment": {
+        "distmod": "windows",
+        "distarch": "x86_64",
+        "target_arch": "x86_64"
+    }
+}
+
+C:\Users\Admin>
+C:\Users\Admin>
+C:\Users\Admin>mongosh
+Current Mongosh Log ID: 6539965448c9ba4aeaf4d585
+Connecting to:          mongodb://127.0.0.1:27017/?directConnection=true&serverSelectionTimeoutMS=2000&appName=mongosh+2.0.2
+Using MongoDB:          7.0.2
+Using Mongosh:          2.0.2
+
+For mongosh info see: https://docs.mongodb.com/mongodb-shell/
+
+
+To help improve our products, anonymous usage data is collected and sent to MongoDB periodically (https://www.mongodb.com/legal/privacy-policy).
+You can opt-out by running the disableTelemetry() command.
+
+------
+   The server generated these startup warnings when booting
+   2023-10-26T03:32:02.936+05:30: Access control is not enabled for the database. Read and write access to data and configuration is unrestricted
+------
+
+test> start mongod
+Uncaught:
+SyntaxError: Missing semicolon. (1:5)
+
+> 1 | start mongod
+    |      ^
+  2 |
+
+test> sudo systemctl start mongod
+Uncaught:
+SyntaxError: Missing semicolon. (1:4)
+
+> 1 | sudo systemctl start mongod
+    |     ^
+  2 |
+
+test> show dbs
+admin   40.00 KiB
+config  60.00 KiB
+local   40.00 KiB
+university> show dbs
+admin   40.00 KiBiversity
+config  60.00 KiB
+local   40.00 KiB
+university> db.createcollection("students")
+TypeError: db.createcollection is not a function
+university> db.createCollection("students")
+{ ok: 1 }
+university> show dbs
+admin        40.00 KiB
+config      108.00 KiB
+local        40.00 KiB
+university    8.00 KiB
+university> db.students.insertOne({"rno":1,"name":"alice"})
+{
+  acknowledged: true,
+  insertedId: ObjectId("653999ad48c9ba4aeaf4d586")
+}
+university> show collections
+students
+university> db.students.find().pretty()
+[
+  { _id: ObjectId("653999ad48c9ba4aeaf4d586"), rno: 1, name: 'alice' }
+]
+university> db.students.updateOne({rno:1},{$set:{name:"ben"}})
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 1,
+  modifiedCount: 1,
+  upsertedCount: 0
+}
+university> db.students.find().pretty()
+[ { _id: ObjectId("653999ad48c9ba4aeaf4d586"), rno: 1, name: 'ben' } ]
+university> db.createCollection("library");
+{ ok: 1 }
+university> db.library.insert({"id":1,"name":"c++"})
+DeprecationWarning: Collection.insert() is deprecated. Use insertOne, insertMany, or bulkWrite.
+{
+  acknowledged: true,
+  insertedIds: { '0': ObjectId("65399cbf48c9ba4aeaf4d587") }
+}
+university>
+university> db.library.insert({"id":2,"name":java});
+ReferenceError: java is not defined
+university> db.library.insert({"id":2,"name":"java"});
+DeprecationWarning: Collection.insert() is deprecated. Use insertOne, insertMany, or bulkWrite.
+{
+  acknowledged: true,
+  insertedIds: { '0': ObjectId("6539fba9009d013036794fd8") }
+}
+university>  db.library.insert({"id":3,"name":"python"});
+{
+  acknowledged: true,
+  insertedIds: { '0': ObjectId("6539fbc9009d013036794fd9") }
+}
+university> db.library.find();
+[
+  { _id: ObjectId("65399cbf48c9ba4aeaf4d587"), id: 1, name: 'c++' },
+  { _id: ObjectId("6539fba9009d013036794fd8"), id: 2, name: 'java' },
+  { _id: ObjectId("6539fbc9009d013036794fd9"), id: 3, name: 'python' }
+]
+university> db.library.find().pretty();
+[
+  { _id: ObjectId("65399cbf48c9ba4aeaf4d587"), id: 1, name: 'c++' },
+  { _id: ObjectId("6539fba9009d013036794fd8"), id: 2, name: 'java' },
+  { _id: ObjectId("6539fbc9009d013036794fd9"), id: 3, name: 'python' }
+]
+university> db.library.update({"python"},{$set:{"name":"python3"}});
+Uncaught:
+SyntaxError: Unexpected token (1:27)
+
+> 1 | db.library.update({"python"},{$set:{"name":"python3"}});
+    |                            ^
+  2 |
+
+university> db.library.update({"python"},{$set:{"name":"python3"}})
+Uncaught:
+SyntaxError: Unexpected token (1:27)
+
+> 1 | db.library.update({"python"},{$set:{"name":"python3"}})
+    |                            ^
+  2 |
+
+university> db.library.update({"name":"python"},{$set:{"name":"python3"}});
+DeprecationWarning: Collection.update() is deprecated. Use updateOne, updateMany, or bulkWrite.
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 1,
+  modifiedCount: 1,
+  upsertedCount: 0
+}
+university> db.library.find();
+[
+  { _id: ObjectId("65399cbf48c9ba4aeaf4d587"), id: 1, name: 'c++' },
+  { _id: ObjectId("6539fba9009d013036794fd8"), id: 2, name: 'java' },
+  { _id: ObjectId("6539fbc9009d013036794fd9"), id: 3, name: 'python3' }
+]
+university> db.library.remove({id:1});
+DeprecationWarning: Collection.remove() is deprecated. Use deleteOne, deleteMany, findOneAndDelete, or bulkWrite.
+{ acknowledged: true, deletedCount: 1 }
+university> db.library.find();
+[
+  { _id: ObjectId("6539fba9009d013036794fd8"), id: 2, name: 'java' },
+  { _id: ObjectId("6539fbc9009d013036794fd9"), id: 3, name: 'python3' }
+]
+university>  db.library.find({"id":3});
+[
+  { _id: ObjectId("6539fbc9009d013036794fd9"), id: 3, name: 'python3' }
+]
+university>  db.library.find({$and:[{"name":"java"},{"desc":"fake book"}])
+Uncaught:
+SyntaxError: Unexpected token, expected "," (1:61)
+
+> 1 |  db.library.find({$and:[{"name":"java"},{"desc":"fake book"}])
+    |                                                              ^
+  2 |
+
+university>  db.library.find({$and:[{"name":"java"},{"desc":"fake book"}]})
+
+university> db.library.find()
+[
+  { _id: ObjectId("6539fba9009d013036794fd8"), id: 2, name: 'java' },
+  { _id: ObjectId("6539fbc9009d013036794fd9"), id: 3, name: 'python3' }
+]
+university>  db.library.find({$and:[{"name":"java"},{"desc":"fake book"}]})
+
+university>  db.library.find({$or:[{"name":"java"},{"desc":"fake book"}]})
+[ { _id: ObjectId("6539fba9009d013036794fd8"), id: 2, name: 'java' } ]
+university>  db.library.insert({"name":"java","desc":"fake book"});
+{
+  acknowledged: true,
+  insertedIds: { '0': ObjectId("653a0043009d013036794fda") }
+}
+university>  db.library.find({$and:[{"name":"java"},{"desc":"fake book"}])
+Uncaught:
+SyntaxError: Unexpected token, expected "," (1:61)
+
+> 1 |  db.library.find({$and:[{"name":"java"},{"desc":"fake book"}])
+    |                                                              ^
+  2 |
+
+university>  db.library.find({$and:[{"name":"java"},{"desc":"fake book"}]);
+Uncaught:
+SyntaxError: Unexpected token, expected "," (1:61)
+
+> 1 |  db.library.find({$and:[{"name":"java"},{"desc":"fake book"}]);
+    |                                                              ^
+  2 |
+
+university>  db.library.find({$and:[{"name":"java"},{"desc":"fake book"}]})
+[
+  {
+    _id: ObjectId("653a0043009d013036794fda"),
+    name: 'java',
+    desc: 'fake book'
+  }
+]
+university> db.library.find({$or:[{"name":"java"},{"desc":"fake book"}]})
+[
+  { _id: ObjectId("6539fba9009d013036794fd8"), id: 2, name: 'java' },
+  {
+    _id: ObjectId("653a0043009d013036794fda"),
+    name: 'java',
+    desc: 'fake book'
+  }
+]
+university> db.library.save({_id: ObjectId("123456789abcdef123456789"), "id": 4, "name": 'html' })
+TypeError: db.library.save is not a function
+university> db.library.save({"_id": ObjectId("123456789abcdef123456789"), "id": 4, "name": 'html' })
+TypeError: db.library.save is not a function
+university>

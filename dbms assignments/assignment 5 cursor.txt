@@ -1,0 +1,128 @@
+6. Cursors: (All types: Implicit, Explicit, Cursor FOR Loop, Parameterized Cursor)
+Write a PL/SQL block of code using parameterized Cursor that will merge the data available in the newly
+created table N_Roll_Call with the data available in the table O_Roll_Call. If the data in the first table
+already exists in the second table then that data should be skipped
+
+
+declare 
+open
+fetch from cursor into some var
+coose c1
+
+mysql> create database ass6;
+
+mysql> create table orollcall (rno int primary key, name varchar(20), addr varchar(20));
+Query OK, 0 rows affected (0.21 sec)
+
+mysql> desc orollcall;
++-------+-------------+------+-----+---------+-------+
+| Field | Type        | Null | Key | Default | Extra |
++-------+-------------+------+-----+---------+-------+
+| rno   | int         | NO   | PRI | NULL    |       |
+| name  | varchar(20) | YES  |     | NULL    |       |
+| addr  | varchar(20) | YES  |     | NULL    |       |
++-------+-------------+------+-----+---------+-------+
+3 rows in set (0.04 sec)
+
+mysql> create table nrollcall (rno int, name varchar(20), addr varchar(20));
+Query OK, 0 rows affected (0.05 sec)
+
+mysql> desc nrollcall;
++-------+-------------+------+-----+---------+-------+
+| Field | Type        | Null | Key | Default | Extra |
++-------+-------------+------+-----+---------+-------+
+| rno   | int         | YES  |     | NULL    |       |
+| name  | varchar(20) | YES  |     | NULL    |       |
+| addr  | varchar(20) | YES  |     | NULL    |       |
++-------+-------------+------+-----+---------+-------+
+3 rows in set (0.01 sec)
+
+mysql> insert into orollcall (rno, name, addr ) values(1,'a','pune'),(2,'b','mumbai'),(3,'c','lonavala'),(4,'d','kashmir'),(5,'e','kerla');
+Query OK, 5 rows affected (0.01 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+
+mysql>  select *from orollcall;
++-----+------+----------+
+| rno | name | addr     |
++-----+------+----------+
+|   1 | a    | pune     |
+|   2 | b    | mumbai   |
+|   3 | c    | lonavala |
+|   4 | d    | kashmir  |
+|   5 | e    | kerla    |
++-----+------+----------+
+5 rows in set (0.00 sec)
+
+mysql> insert into nrollcall (rno, name, addr ) values(1,'a','pune'),(2,'b','mumbai'),(3,'c','lonavala');
+Query OK, 3 rows affected (0.01 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+
+mysql> select *from nrollcall;
++------+------+----------+
+| rno  | name | addr     |
++------+------+----------+
+|    1 | a    | pune     |
+|    2 | b    | mumbai   |
+|    3 | c    | lonavala |
++------+------+----------+
+3 rows in set (0.00 sec)
+
+delimiter //
+create procedure p1(IN rno1 int)
+begin
+declare rno2 int;
+declare exitcond boolean;
+declare c1 cursor for select rno from orollcall where rno>rno1;
+declare continue handler for not found set exitcond=TRUE;
+open c1;
+l1:loop
+fetch c1 into rno2;
+if not exists(select *from nrollcall where rno= rno2) then
+insert into nrollcall select *from orollcall where rno=rno2;
+end if;
+if exitcond then
+close c1;
+leave l1;
+end if;
+end loop l1;
+end //
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> delimiter ;
+mysql> call p1(3);
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> select *from nrollcall;
++------+------+----------+
+| rno  | name | addr     |
++------+------+----------+
+|    1 | a    | pune     |
+|    2 | b    | mumbai   |
+|    3 | c    | lonavala |
+|    4 | d    | kashmir  |
+|    5 | e    | kerla    |
++------+------+----------+
+5 rows in set (0.00 sec)
+
+non parameterized
+DELIMITER //
+CREATE PROCEDURE p1()
+BEGIN
+DECLARE rno2 INT;
+DECLARE exitcond BOOLEAN;
+DECLARE c1 CURSOR FOR SELECT rno FROM orollcall;
+DECLARE CONTINUE HANDLER FOR NOT FOUND SET exitcond = TRUE;
+OPEN c1;
+l1: LOOP
+FETCH c1 INTO rno2;
+IF NOT EXISTS (SELECT * FROM nrollcall WHERE rno = rno2) THEN
+INSERT INTO nrollcall SELECT * FROM orollcall WHERE rno = rno2;
+END IF;
+IF exitcond THEN
+CLOSE c1;
+LEAVE l1;
+END IF;
+END LOOP l1;
+CLOSE c1;
+END //
+DELIMITER ;
