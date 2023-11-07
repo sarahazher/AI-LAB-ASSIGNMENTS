@@ -1,0 +1,42 @@
+<aiml>
+<category>
+<pattern>HI</pattern>
+<template>Hello there!</template>
+</category>
+<category>
+<pattern>HELLO</pattern>
+<template>Hi! How can I assist you today?</template>
+</category>
+<category>
+<pattern>WHAT IS THE COST FOR A CAB FROM PUNE TO MUMBAI</pattern>
+<template>IT WILL BE 2000 RS.</template>
+</category>
+<category>
+<pattern>WHAT TYPES OF CARS AVAILABLE</pattern>
+<template>SUV , SEDAN , HATCHBACK.</template>
+</category>
+<category>
+<pattern>PEOPLE TRAVELLING WILL BE 4</pattern>
+<template>THEN A SEDAN WILL BE COMFORTABLE.</template>
+</category>
+<category>
+<pattern>HOW CAN I CONFIRM MY BOOKING </pattern>
+<template>SEND YOUR TRAVEL DETAILS ON THIS NO 8478742346 TO CONFIRM BOOKING.</template>
+</category>
+<category>
+<pattern>WILL THE DRIVER BE EXPERIENCED</pattern>
+<template>YES WE HIRE ONLY EXPERIENCED DRIVER.</template>
+</category>
+<category>
+<pattern>WILL THE CAB ARRIVE ON TIME</pattern>
+<template>YES SIR WE SERVE CORPERRATE COMPANIES TOO THE CAB WILL DEFINATLEY ON TIME.</template>
+</category>
+<category>
+<pattern>ARE YOUR CABS SANITIZED</pattern>
+<template>WE CLEAN OUR CABS AFTER EVERY SERVICE.</template>
+</category>
+<category>
+<pattern>IS THERE SAFTEY FEATURES IN THE CAB</pattern>
+<template>AS THESE CABS ARE GOVERNMENT AUTHORIZED THEY INCLUDE EVERY SAFTERY FEATURE AVAILABLE.</template>
+</category>
+</aiml>
