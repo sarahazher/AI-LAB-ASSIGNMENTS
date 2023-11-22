@@ -1,0 +1,75 @@
+struct node
+{
+    unsigned dist[6];
+    unsigned from[6];
+} DVR[10];
+This defines a struct named node. Each node contains two arrays:
+
+dist[6]: This array holds the distance values from the current node to other nodes.
+from[6]: This array holds the information about the next hop (the node to which the message should be forwarded) for each destination node.
+An array of node structures named DVR is created, allowing for a maximum of 10 nodes. This array will store the routing information for each node.
+
+cpp
+Copy code
+int main()
+{
+    cout<<"\n\n-------------------- Distance Vector Routing Algorithm----------- ";
+The main function serves as the entry point of the program. It prints a header indicating that the Distance Vector Routing Algorithm is being used.
+cpp
+Copy code
+int costmat[6][6];
+int nodes, i, j, k;
+cout<<"\n\n Enter the number of nodes : ";
+cin>>nodes; // Enter the nodes
+Declares an integer array costmat[6][6] to store the cost (distance) matrix. This matrix represents the costs of reaching each node from every other node.
+Declares integer variables nodes, i, j, and k for various loop counters and the number of nodes.
+Prompts the user to enter the number of nodes and reads it from the standard input.
+cpp
+Copy code
+cout<<"\n Enter the cost matrix : \n";
+for(i = 0; i < nodes; i++)
+{
+    for(j = 0; j < nodes; j++)
+    {
+        cin >> costmat[i][j];
+        costmat[i][i] = 0;
+        DVR[i].dist[j] = costmat[i][j];
+        DVR[i].from[j] = j;
+    }
+}
+Asks the user to enter the cost matrix by iterating through each element of the costmat array.
+The diagonal elements (i.e., costmat[i][i]) are set to zero because the distance from a node to itself is zero.
+The dist and from arrays of the DVR structure are initialized with the values from the costmat for each node and destination.
+cpp
+Copy code
+for(i = 0; i < nodes; i++)
+    for(j = i + 1; j < nodes; j++)
+        for(k = 0; k < nodes; k++)
+            if (DVR[i].dist[j] > costmat[i][k] + DVR[k].dist[j])
+            {
+                DVR[i].dist[j] = DVR[i].dist[k] + DVR[k].dist[j];
+                DVR[j].dist[i] = DVR[i].dist[j];
+                DVR[i].from[j] = k;
+                DVR[j].from[i] = k;
+            }
+This code calculates the minimum distance between nodes using the Distance Vector Routing Algorithm.
+Nested loops iterate through all pairs of nodes to update the routing information in the DVR structure.
+If a shorter path is found, the dist arrays are updated along with the from arrays.
+cpp
+Copy code
+for(i = 0; i < nodes; i++)
+{
+    cout<<"\n\n For router: "<<i+1;
+    for(j = 0; j < nodes; j++)
+        cout<<"\t\n node "<<j+1<<" via "<<DVR[i].from[j]+1<<" Distance "<<DVR[i].dist[j];
+}
+Finally, the code prints the routing information for each router. It displays the node number, the next-hop node (via), and the distance to each destination node.
+cpp
+Copy code
+cout<<" \n\n ";
+return 0;
+The program ends with a return value of 0, indicating successful execution.
+
+
+
+

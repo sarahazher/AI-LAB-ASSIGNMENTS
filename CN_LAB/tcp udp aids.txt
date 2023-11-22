@@ -1,0 +1,140 @@
+//TCP server :
+import socket
+
+server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+server_address = ('localhost', 8080)
+server_socket.bind(server_address)
+server_socket.listen(1)
+
+print('TCP Server is listening on {}:{}'.format(*server_address))
+
+while True:
+    print('Waiting for a connection...')
+    connection, client_address = server_socket.accept()
+    
+    print('Connection from', client_address)
+    
+    data = connection.recv(1024)
+    while data:
+        print('Received:', data.decode())
+        data = connection.recv(1024)
+    
+    connection.close()
+ 
+TCP client:
+
+import socket
+
+client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+server_address = ('localhost', 8080)
+client_socket.connect(server_address)
+
+message = 'Hello, TCP Server!'
+print('Sending:', message)
+client_socket.sendall(message.encode())
+
+client_socket.close()
+
+//UDP server :
+
+import socket
+
+server_socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+server_address = ('localhost', 9090)
+server_socket.bind(server_address)
+
+print('UDP Server is listening on {}:{}'.format(*server_address))
+
+while True:
+    print('Waiting for a message...')
+    data, client_address = server_socket.recvfrom(1024)
+    
+    print('Received:', data.decode(), 'from', client_address)
+
+
+//UDP client :
+
+import socket
+
+client_socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+server_address = ('localhost', 9090)
+
+message = 'Hello, UDP Server!'
+print('Sending:', message)
+client_socket.sendto(message.encode(), server_address)
+
+client_socket.close()
+
+
+TCP Server & Client:
+The TCP (Transmission Control Protocol) is a connection-based protocol that ensures data delivery and order between the sender and receiver.
+
+TCP Server:
+
+The server creates a socket and binds it to a specific address (localhost) and port (8080).
+It listens for incoming connections using server_socket.listen(1).
+When a client connects (server_socket.accept()), it receives data until the connection is closed (connection.recv()).
+Once the connection ends, it closes the connection (connection.close()).
+TCP Client:
+
+The client creates a socket and connects to the server's address (localhost) and port (8080).
+It sends a message ('Hello, TCP Server!') to the server using client_socket.sendall() and closes the connection.
+UDP Server & Client:
+UDP (User Datagram Protocol) is a connectionless protocol that sends data without establishing a connection, which can lead to faster transmission but doesn't guarantee delivery or order.
+
+UDP Server:
+The server creates a UDP socket and binds it to a specific address (localhost) and port (9090).
+It continuously waits for messages (server_socket.recvfrom()) and prints the received data along with the client's address.
+UDP Client:
+The client creates a UDP socket.
+It sends a message ('Hello, UDP Server!') to the server's address (localhost) and port (9090) using client_socket.sendto().
+Summary:
+TCP ensures reliable, ordered, and error-checked delivery of a stream of bytes between applications.
+UDP is a simpler protocol without a direct connection; it's faster but does not guarantee order or delivery.
+Remember:
+
+TCP is used for applications requiring reliability, such as web browsing and email.
+UDP is used for applications that can tolerate loss or unordered delivery, such as video streaming and online gaming.
+
+
+
+
+
+TCP (Transmission Control Protocol):
+Analogy: Sending a Certified Mail Package
+Imagine you're sending a certified mail package to a friend:
+
+Reliability: With TCP, it's like sending a certified mail package where you expect the recipient to confirm receiving each item individually.
+
+Connection-Oriented: Before sending the package, you confirm the recipient's address, phone number, and plan for delivery confirmation.
+
+Ordered Delivery: Each item in the package has a number, ensuring they arrive in the correct order.
+
+Error-Checking & Correction: If an item in the package is damaged or lost during transit, you resend that specific item until it's received correctly.
+
+UDP (User Datagram Protocol):
+Analogy: Sending Postcards
+Now, let's consider sending postcards to your friends:
+
+Unreliability: UDP is like sending postcards where you don't expect confirmation of delivery.
+
+Connectionless: You write the message on a postcard and drop it in the mailbox without prior arrangements.
+
+No Order Guarantee: If you send multiple postcards, they might arrive out of order due to differences in mail processing.
+
+No Error Correction: If a postcard gets lost, damaged, or doesn't arrive, there's no automatic resend or error correction.
+
+Summarizing the Differences:
+TCP is like a certified mail package, ensuring reliability, order, and error-correction but might be slower due to the confirmation process.
+
+UDP is like sending postcards—faster, no delivery confirmation, no order guarantee, and no automatic error correction.
+
+Real-World Application Examples:
+TCP is commonly used in applications like web browsing, email, file transfer (FTP), and database management systems where reliability and correctness are crucial.
+
+UDP is suitable for real-time applications such as video streaming, online gaming, DNS (Domain Name System), and VoIP (Voice over Internet Protocol), where speed and minimal delay are prioritized over error correction or delivery confirmation.
+
+Remembering these analogies can help differentiate TCP and UDP:
+
+TCP: Think of the detailed, reliable process of sending a certified mail package.
+UDP: Imagine the quick, straightforward nature of sending postcards without expecting confirmation or order assurance.

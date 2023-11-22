@@ -1,0 +1,130 @@
+import socket
+def ip_to_hostname(ip_address):
+    hostname=socket.gethostbyaddr(ip_address)
+    if hostname:
+        print("The hostname for ip address :",ip_address," is :","https://"+hostname[0])
+        
+def hostname_to_ip(hostname):
+    ip_address=socket.gethostbyname(hostname)
+    print("ip address for :",hostname," is :",ip_address)
+ip_address = "8.8.8.8"
+ip_to_hostname(ip_address)
+hostname = "www.example.com"
+hostname_to_ip(hostname)
+
+# # Certainly! This Python code snippet demonstrates how to convert an IP address 
+# to a hostname (ip_to_hostname()) and a hostname to an IP address (hostname_to_ip()) 
+# using Python's socket library.
+
+# # ip_to_hostname(ip_address) Function:
+# # This function takes an IP address as input and converts it to a corresponding 
+# hostname using the socket.gethostbyaddr() function.
+
+# # socket.gethostbyaddr(ip_address): This function performs a reverse DNS (Domain
+# Name System) lookup to retrieve the hostname associated with the given IP address.
+
+# # The ip_address variable holds the IP address (e.g., "8.8.8.8").
+
+# # The result (hostname) is a tuple containing the hostname, aliases, and IP addresses 
+# associated with the given IP.
+
+# # The function checks if a hostname is obtained and prints it in a formatted manner 
+# with the "https://" prefix.
+
+# # hostname_to_ip(hostname) Function:
+# # This function takes a hostname as input and converts it to the corresponding IP 
+# address using socket.gethostbyname().
+
+# # socket.gethostbyname(hostname): This function retrieves the IP address associated 
+# with the given hostname.
+
+# # The hostname variable holds the hostname (e.g., "www.example.com").
+
+# # The result (ip_address) is the IP address corresponding to the given hostname.
+
+# # The function prints the obtained IP address.
+
+# # Example Usage:
+# # ip_address = "8.8.8.8"
+
+# # The ip_to_hostname(ip_address) function is called with the IP address "8.8.8.8".
+# It performs a reverse DNS lookup to find the hostname associated with this IP address.
+# If a hostname is found, it prints the hostname prefixed with "https://".
+
+# # For example, if "8.8.8.8" is associated with a hostname, the function would print
+# something like:
+
+# # csharp
+# # Copy code
+# # The hostname for ip address : 8.8.8.8  is : https://somehostname.com
+# # hostname = "www.example.com"
+
+# # The hostname_to_ip(hostname) function is called with the hostname "www.example.com".
+# It retrieves the IP address corresponding to this hostname and prints the obtained IP address.
+
+# # For example, if "www.example.com" resolves to an IP address, the function would print something like:
+
+# # csharp
+# # Copy code
+# # ip address for : www.example.com  is : 93.184.216.34
+# These functions demonstrate DNS resolution using the socket library in Python,
+# allowing you to convert between IP addresses and hostnames easily.
+
+
+
+
+
+# Absolutely! Let's explore DNS (Domain Name System) with relatable examples to help remember its functionality.
+
+# ### Analogy: Phone Book for the Internet
+
+# Imagine you're looking for contact information in a phone book:
+
+# 1. **Mapping Names to Numbers**: DNS is like a massive phone book for the internet that 
+# maps domain names (like website names) to their respective IP addresses (like phone numbers).
+
+# 2. **Translation Service**: Just as a phone book translates names to phone numbers, DNS 
+# translates domain names (e.g., www.example.com) to IP addresses (e.g., 93.184.216.34) computers understand.
+
+# 3. **Hierarchical Structure**: Similar to how a phone book is organized alphabetically, 
+# DNS is organized in a hierarchical structure with different levels (root, top-level domains, 
+# domain names, subdomains, etc.).
+
+# #### Example: Translating a Domain Name to an IP Address
+
+# Suppose you want to visit a website (e.g., "www.example.com"):
+
+# 1. **You Type a Domain Name**: You type the domain name (like searching for a contact 
+# name in a phone book).
+
+# 2. **DNS Lookup**: Your computer sends a request to a DNS server, asking for the IP address 
+# associated with "www.example.com."
+
+# 3. **DNS Resolution**: The DNS server searches its records (or forwards the request) to
+# find the IP address linked to "www.example.com."
+
+# 4. **Returned IP Address**: The DNS server responds to your computer with the IP address 
+# associated with "www.example.com."
+
+# 5. **Accessing the Website**: With the obtained IP address, your browser connects to that 
+# IP to access the website's content.
+
+# ### Simplified Process:
+
+# - **Domain Name Resolution**: DNS helps translate easy-to-remember domain names into numeric
+# IP addresses used by computers to locate each other on the internet.
+
+# - **Address Book of the Internet**: DNS serves as the internet's address book, enabling 
+# devices to find and connect to websites using human-readable domain names.
+
+# ### Remembering DNS:
+
+# - **Phone Book Analogy**: Think of DNS as a phone book that translates domain names to 
+# IP addresses, guiding your device to the right destination on the internet.
+
+# - **Address Translator**: Like a language translator, DNS converts domain names (words) 
+# to IP addresses (numbers) so devices can communicate effectively.
+
+# By remembering DNS as an essential system functioning as the internet's address translator, 
+# akin to a phone book, you can grasp its role in facilitating seamless internet navigation 
+# by converting domain names into machine-readable IP addresses.

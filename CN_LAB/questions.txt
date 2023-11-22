@@ -1,0 +1,41 @@
+1. Demonstrate the different types of topologies and types of transmission media by using a
+packet tracer tool.
+
+3. Use packet Tracer tool for configuration of 3 router network using one of the following
+protocol RIP/OSPF/BGP
+
+11. Write a program for DNS lookup. Given an IP address input, it should return URL and vice
+versa.
+
+4. Write a program to implement link state /Distance vector routing protocol to find suitable path
+for transmission.
+
+5. Write a program using TCP socket for wired network for Following
+a. Say Hello to Each other
+b. File transfer
+
+10. To study the IPsec (ESP and AH) protocol by capturing the packets using Wireshark tool.
+
+7. Study and Analyze the performance of HTTP, HTTPS and FTP protocol using Packet tracer
+tool.
+
+6. Write a program using UDP Sockets to enable file transfer (Script, Text, Audio and Video one
+file each) between two machines
+
+
+
+
+12.Installing and configure DHCP server and write a program to install the software on remote machine.
+
+2. Setup a wired LAN using Layer 2 Switch. It includes preparation of cable, testing of cable
+using line tester, configuration machine using IP addresses, testing using PING utility and
+demonstrating the PING packets captured traces using Wireshark Packet Analyzer Tool.
+
+8. To study the SSL protocol by capturing the packets using Wireshark tool while visiting any
+SSL secured website (banking, e-commerce etc.)
+
+9. Illustrate the steps for implementation of S/MIME email security through
+Microsoft® Office Outlook.
+
+
+
